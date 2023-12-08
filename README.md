@@ -43,7 +43,7 @@ We also applied this principle, because many of these classes are easily open to
  ## Installation/Usage
   Using git, clone the repository, and ```cd``` into it.
 ```
-  git clone https://github.com/cs100/final-project-rrang020-abane029-dlian032-aorde001.git
+  git clone --recursive https://github.com/cs100/final-project-rrang020-abane029-dlian032-aorde001.git
 ```
 ```
   cd final-project-rrang020-abane029-dlian032-aorde001
