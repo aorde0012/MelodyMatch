@@ -22,12 +22,6 @@ void Song::displayDetails() {
     cout<<title<<" by: "<<artist<<endl;
     cout<< "   URL:https://open.spotify.com/track/" <<trackID <<endl;
     
-    /*
-    cout << "Title: " << title << ", Genre: " << genre
-        << ", Mood: " << getMood() << ", Artist: " << artist
-        << " URL:https://open.spotify.com/track/" <<trackID <<endl;
-
-    */
 }
 
 string Song::getTitle() {
@@ -59,11 +53,6 @@ string Song::getArtist() {
     return this->artist;
 }
 
-/*
-void Song::setMood(string m){
-    this->mood = m;
-}
-*/
 string Song::getTrackID(){
     return this->trackID; //Added the prefix of the url so users can access the track immediately
 }
