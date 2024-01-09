@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include "../header/songsDataManager.h"
+#include "../header/song.h"
 
 using namespace std;
 
@@ -21,12 +22,29 @@ void songsDataManager::GetData(const std::string& filename) {
             continue;  //Skip the first line
         }
         istringstream iss(line);
-        string genre, artist, title, trackID;
-        string tempTitle;
+        string genre, artist, title, trackID, danceabilityStr, energyStr, livenessStr;
+        string tempTitle, tempArtist;
         double danceability, energy, liveness;
 
         getline(iss, genre, ',');
-        getline(iss, artist, ',');
+        //Deal with commas within artist name
+        if (iss.peek() == '"') {
+            iss.ignore();
+            getline(iss, artist, '"');
+            while (iss.peek() == '"') {
+                artist += '"';
+                iss.ignore(); 
+                getline(iss, tempArtist, '"');
+                artist += tempArtist;
+            }
+            if (iss.peek() == ',') {
+                iss.ignore();
+            }
+        }
+        else {
+            getline(iss, artist, ',');
+        }        
+        //Deal with commas within title
         if (iss.peek() == '"') {
             iss.ignore();
             getline(iss, title, '"');
@@ -43,9 +61,23 @@ void songsDataManager::GetData(const std::string& filename) {
         else {
             getline(iss, title, ',');
         }
-        iss >> danceability >> energy >> liveness;
+        getline(iss, trackID, ',');
+        getline(iss, danceabilityStr, ',');
+        getline(iss, energyStr, ',');
+        getline(iss, livenessStr);
+
+        //Convert danceability/energy/liveness strings into doubles
+        try {
+            danceability = stod(danceabilityStr);
+            energy = stod(energyStr);
+            liveness = stod(livenessStr);
+        } 
+        catch (const invalid_argument& error) {
+            cout << "Error converting string to double: " << error.what() << " " << line;
+            return;
+        }
         //Create a new Song object and add it to the ListOfSongs vector
-        Song newSong(title, genre, "BLANK", artist, trackID, danceability, energy, liveness);
+        Song newSong(title, genre, artist, trackID, danceability, energy, liveness);
         ListOfSongs.push_back(newSong);        
     }
     file.close();
@@ -54,5 +86,3 @@ void songsDataManager::GetData(const std::string& filename) {
 vector<Song> songsDataManager::getSongs() const {
     return ListOfSongs;
 }
-
-

@@ -3,5 +3,10 @@ CMakeFiles/
 Makefile
 cmake_install.cmake
 parseSongData
-runAllTests
+MelodyMatch
 lib/
+songTest
+userTest
+loginAuthTest
+mainLoginTest
+runAllTests
